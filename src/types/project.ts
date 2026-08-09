@@ -138,6 +138,7 @@ export type Project = {
   slug: string;
   title: string;
   summary: string;
+  featuredSummary?: string;
   status: ProjectStatus;
   featured: boolean;
   featuredOrder?: number;

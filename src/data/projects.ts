@@ -24,6 +24,8 @@ export const projects: Project[] = [
     slug: "meta-pipeline",
     title: "E-Commerce Hybrid Data Pipeline",
     subtitle: "Event-Driven Streaming & Batch Data Platform",
+    featuredSummary:
+      "Kafka와 Spark를 기반으로 실시간 이벤트와 배치 데이터를 통합 처리하고, Bronze–Silver–Gold 계층으로 가공하는 E-Commerce 데이터 파이프라인입니다.",
     summary:
       "주문·배송·리뷰 이벤트를 Kafka와 Spark Structured Streaming으로 실시간 처리하고, Airflow 기반 Spark Batch를 통해 Bronze–Silver–Gold 계층으로 가공하여 PostgreSQL과 Metabase에서 분석할 수 있도록 구축한 하이브리드 데이터 파이프라인입니다.",
     status: "정리 중",
@@ -72,9 +74,9 @@ export const projects: Project[] = [
       },
       {
         index: "03",
-        label: "INDEX TEST",
+        label: "QUERY",
         value: "19.810 → 0.074 ms",
-        description: "PostgreSQL 조회 실행 시간 비교",
+        description: "PostgreSQL 특정 occupation 조건 조회의 인덱스 적용 전후 실행 시간",
       },
     ],
     coreTechnologies: ["Kafka", "Spark", "Airflow", "MinIO", "PostgreSQL", "Docker"],

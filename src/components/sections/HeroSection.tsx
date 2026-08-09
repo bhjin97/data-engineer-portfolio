@@ -22,14 +22,6 @@ export function HeroSection() {
             <a className={secondaryButton} href={profile.links.github} target="_blank" rel="noopener noreferrer">GitHub</a>
             <a className={secondaryButton} href={profile.links.blog} target="_blank" rel="noopener noreferrer">Blog</a>
           </div>
-          <div className="mt-10 flex flex-col gap-3 border-t border-slate-200 pt-6 sm:flex-row sm:items-center sm:gap-5" aria-label="주요 기술 스택">
-            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-slate-400">Core stack</p>
-            <ul className="flex flex-wrap gap-x-5 gap-y-2">
-            {profile.stack.map((technology) => (
-              <li className="text-sm font-semibold text-slate-600" key={technology}>{technology}</li>
-            ))}
-            </ul>
-          </div>
         </div>
       </div>
     </section>
