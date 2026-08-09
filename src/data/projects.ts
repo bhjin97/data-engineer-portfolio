@@ -59,16 +59,16 @@ export const projects: Project[] = [
       {
         index: "01",
         label: "적재 검증",
-        value: "1,000,000",
+        value: "4.5M",
         unit: "EVENTS",
-        description: "Kafka → Spark → MinIO 정상 적재 검증",
+        description: "100만 테스트 주문 기반 Kafka → Spark → MinIO 적재 검증",
       },
       {
         index: "02",
         label: "입력 조건 검증",
         value: "10,000",
         unit: "EPS",
-        description: "고부하 입력 환경에서 전체 데이터 흐름 검증",
+        description: "10,000 EPS 입력 부하에서 Kafka → Spark → MinIO 적재 검증",
       },
       {
         index: "03",
@@ -183,8 +183,11 @@ export const projects: Project[] = [
         index: "04",
         label: "Workflow Monitoring",
         title: "Workflow Notification",
-        description: "Airflow DAG 실패 상태를 Slack으로 알림",
-        flows: [{ label: "Notification", steps: ["Airflow DAG", "Success / Failure", "Slack"] }],
+        description: "Task 실패 시 on_failure_callback으로 Slack 알림을 전송하고 Gold Mart 생성 완료 시 성공 알림을 전송합니다. 메시지에는 DAG ID, Task ID, Execution Date, Log URL을 포함합니다.",
+        flows: [
+          { label: "Failure Alert", steps: ["Airflow Task Failure", "on_failure_callback", "Slack"] },
+          { label: "Success Notification", steps: ["build_gold_marts Success", "Slack"] },
+        ],
       },
     ],
     troubleshooting: [
@@ -305,26 +308,26 @@ export const projects: Project[] = [
       ],
       validations: [
         {
-          index: "01", label: "Volume Test", question: "대량 이벤트를 End-to-End로 처리할 수 있는가?", value: "1,000,000", unit: "EVENTS",
-          description: "100만 건의 테스트 이벤트로 Kafka → Spark Structured Streaming → MinIO Bronze 흐름과 Spark Batch 처리를 검증했습니다.",
+          index: "01", label: "Volume Test", question: "대량 이벤트를 End-to-End로 처리할 수 있는가?", value: "4,500,327", unit: "EVENTS",
+          description: "1,000,000개의 Synthetic Order를 기반으로 총 4,500,327개의 주문·배송·리뷰 이벤트를 생성하고, Kafka → Spark Structured Streaming → MinIO Bronze까지 동일 건수 적재를 검증했습니다.",
         },
         {
           index: "02", label: "Load Test", question: "입력 부하가 증가해도 데이터 흐름이 유지되는가?", value: "10,000", unit: "EPS",
-          description: "10,000 EPS 입력 조건에서 Kafka → Spark → MinIO 전체 흐름이 정상적으로 유지되는 것을 확인했습니다.",
-          limitation: "Producer가 약 11,000 EPS에서 먼저 병목되어 Spark 자체의 최대 처리량을 측정한 결과는 아닙니다.",
+          description: "10,000 EPS 입력 조건에서 Kafka → Spark Structured Streaming → MinIO까지 전체 데이터 흐름과 적재 상태를 검증했습니다.",
+          limitation: "Producer가 약 11,000 EPS에서 먼저 병목되어 Spark 자체의 처리 한계까지 측정한 결과는 아닙니다.",
           image: { src: "/projects/meta-pipeline/load-test-10k.png", alt: "10,000 EPS 부하 테스트 Grafana 지표", label: "10K EPS Load Test" },
         },
         {
           index: "03", label: "Query Optimization", question: "Analytics Serving Query를 개선할 수 있는가?", value: "19.810 ms → 0.074 ms",
-          description: "customer_id 조회 조건에 인덱스를 적용하고 EXPLAIN ANALYZE로 실행 시간을 비교했습니다. 해당 측정에서 Execution Time은 19.810 ms에서 0.074 ms로 감소했습니다.",
-          limitation: "특정 customer_id 조회 조건에서 수행한 해당 EXPLAIN ANALYZE의 Execution Time 측정 결과입니다.",
+          description: "mart_customer_segment_sales의 occupation 조건 조회에 인덱스를 적용하고 동일 쿼리를 EXPLAIN (ANALYZE, BUFFERS)로 비교한 결과, Execution Time이 19.810 ms에서 0.074 ms로 감소했습니다.",
+          limitation: "WHERE occupation = '금형원' 조건으로 수행한 해당 EXPLAIN ANALYZE 측정 결과입니다.",
           indexTest: {
-            test: "customer_id 조건 조회에 Index 적용",
+            test: "mart_customer_segment_sales의 occupation 조건 조회에 Index 적용",
             before: "19.810 ms",
             after: "0.074 ms",
             beforePlan: "Parallel Seq Scan",
             afterPlan: "Bitmap Index Scan",
-            indexName: "idx_serving_fact_customer",
+            indexName: "idx_mart_customer_segment_occupation",
           },
           comparison: {
             before: { src: "/projects/meta-pipeline/index-before.png", alt: "PostgreSQL 인덱스 적용 전 실행 계획과 실행 시간", label: "Index Before" },
@@ -333,7 +336,7 @@ export const projects: Project[] = [
         },
       ],
       limitations: [
-        { index: "01", title: "Producer Bottleneck", limitation: "약 11,000 EPS에서 Producer가 먼저 병목되어 Spark 최대 Streaming 처리량은 측정하지 못했습니다.", next: "Producer 병렬화와 Kafka Partition 조정 후 Spark 처리 한계를 다시 측정합니다." },
+        { index: "01", title: "Producer Bottleneck", limitation: "약 11,000 EPS에서 Producer가 먼저 병목되어 Spark Streaming 처리 한계까지는 측정하지 못했습니다.", next: "Producer 병렬화와 Kafka Partition 조정 후 Spark 처리 한계를 다시 측정합니다." },
         { index: "02", title: "Single-Node Environment", limitation: "4 CPU · 24GB 단일 VM에서 구축해 분산 환경의 수평 확장 효과는 검증하지 못했습니다.", next: "Kafka Broker와 Spark Worker를 여러 노드로 분리해 처리량과 장애 복구 특성을 비교합니다." },
         { index: "03", title: "Synthetic Load", limitation: "Olist 데이터를 이벤트로 재구성한 테스트로 실제 트래픽의 불규칙한 패턴과 완전히 같지 않습니다.", next: "Burst Traffic, 시간대 편향, 이벤트 타입별 비율 차이를 반영합니다." },
         { index: "04", title: "Data Quality & Schema Evolution", limitation: "현재는 처리, 기본 Validation, 복구 구조 검증에 집중했습니다.", next: "Data Quality 자동화, 실패 데이터 격리, Schema Change Detection과 알림을 추가합니다." },
@@ -369,13 +372,13 @@ export const projects: Project[] = [
         id: "performance",
         title: "Performance",
         content:
-          "10,000 EPS 입력 조건에서 Kafka → Spark → MinIO 전체 흐름을 검증했으며, 특정 customer_id 조회 조건에서 PostgreSQL 인덱스 적용 전후 Execution Time이 19.810 ms에서 0.074 ms로 감소한 것을 확인했습니다.",
+          "10,000 EPS 입력 조건에서 Kafka → Spark Structured Streaming → MinIO 전체 흐름을 검증했으며, mart_customer_segment_sales의 occupation 조건 조회에서 인덱스 적용 전후 Execution Time이 19.810 ms에서 0.074 ms로 감소한 것을 확인했습니다.",
       },
       {
         id: "monitoring-operations",
         title: "Monitoring & Operations",
         content:
-          "Redis와 Grafana로 최신·누적 처리 지표를 확인하고 Airflow DAG 실패 상태를 Slack으로 알리도록 구성했습니다.",
+          "Redis와 Grafana로 최신·누적 처리 지표를 확인하고, Task 실패 시 Slack 실패 알림과 Gold Mart 생성 완료 시 성공 알림을 전송하도록 구성했습니다.",
       },
       {
         id: "troubleshooting",
@@ -387,7 +390,7 @@ export const projects: Project[] = [
         id: "results-lessons",
         title: "Results & Lessons",
         content:
-          "1,000,000개 이벤트 적재, 10,000 EPS 입력 조건의 전체 흐름, 인덱스 적용에 따른 조회 성능 개선을 검증했습니다.",
+          "1,000,000개의 Synthetic Order를 기반으로 생성한 4,500,327개 이벤트 적재, 10,000 EPS 입력 조건의 전체 흐름, 특정 occupation 조회 조건의 인덱스 적용 전후 실행 시간을 검증했습니다.",
       },
     ],
     relatedLinks: [{ label: "GitHub", href: "https://github.com/bhjin97/Meta_Pipeline" }],
