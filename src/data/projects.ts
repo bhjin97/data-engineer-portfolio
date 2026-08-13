@@ -396,7 +396,10 @@ export const projects: Project[] = [
           "1,000,000개의 Synthetic Order를 기반으로 생성한 4,500,327개 이벤트 적재, 10,000 EPS 입력 조건의 전체 흐름, 특정 occupation 조회 조건의 인덱스 적용 전후 실행 시간을 검증했습니다.",
       },
     ],
-    relatedLinks: [{ label: "GitHub", href: "https://github.com/bhjin97/Meta_Pipeline" }],
+    relatedLinks: [
+      { label: "GitHub Repository", href: "https://github.com/bhjin97/Meta_Pipeline" },
+      { label: "Final Presentation · PDF", href: "/projects/meta-pipeline/E-Commerce-Hybrid-Data-Pipeline.pdf" },
+    ],
   },
   {
     slug: "aller",

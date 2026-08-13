@@ -2,34 +2,28 @@
 
 import { useEffect, useState } from "react";
 
-export const metaPipelineSectionNavItems = [
-  ["Overview", "overview"],
-  ["Pipeline", "data-flow"],
-  ["Decisions", "decisions"],
-  ["Modeling", "modeling"],
-  ["Operations", "operations"],
-  ["Troubleshooting", "troubleshooting"],
-  ["Validation", "validation"],
-  ["Next Step", "next-step"],
-] as const;
-
-type ProjectSectionNavProps = {
-  items?: ReadonlyArray<readonly [label: string, id: string]>;
+export type SectionNavItem = {
+  id: string;
+  label: string;
 };
 
-export function ProjectSectionNav({ items = metaPipelineSectionNavItems }: ProjectSectionNavProps) {
-  const [activeSection, setActiveSection] = useState(items[0]?.[1] ?? "");
+type ProjectSectionNavProps = {
+  items: readonly SectionNavItem[];
+};
+
+export function ProjectSectionNav({ items }: ProjectSectionNavProps) {
+  const [activeSection, setActiveSection] = useState(items[0]?.id ?? "");
 
   useEffect(() => {
     const sections = items
-      .map(([, id]) => document.getElementById(id))
+      .map(({ id }) => document.getElementById(id))
       .filter((section): section is HTMLElement => section !== null);
     let frameId = 0;
 
     const updateActiveSection = () => {
       frameId = 0;
-      const marker = window.scrollY + 145;
-      let currentSection = items[0]?.[1] ?? "";
+      const marker = window.scrollY + 225;
+      let currentSection = items[0]?.id ?? "";
 
       for (const section of sections) {
         if (section.offsetTop <= marker) {
@@ -66,11 +60,11 @@ export function ProjectSectionNav({ items = metaPipelineSectionNavItems }: Proje
     >
       <div className="mx-auto max-w-6xl overflow-x-auto">
         <ul className="flex min-w-max items-center gap-7 py-5 text-sm text-slate-700 sm:gap-8 sm:py-6">
-          {items.map(([label, id]) => {
-            const isActive = activeSection === id;
+          {items.map((item) => {
+            const isActive = activeSection === item.id;
 
             return (
-              <li key={id}>
+              <li key={item.id}>
                 <a
                   aria-current={isActive ? "location" : undefined}
                   className={`relative block pb-2 pt-1 transition-colors hover:text-blue-700 ${
@@ -78,10 +72,10 @@ export function ProjectSectionNav({ items = metaPipelineSectionNavItems }: Proje
                       ? "font-semibold text-blue-700 after:absolute after:inset-x-0 after:bottom-0 after:h-0.5 after:bg-blue-600"
                       : "font-medium"
                   }`}
-                  href={`#${id}`}
-                  onClick={() => setActiveSection(id)}
+                  href={`#${item.id}`}
+                  onClick={() => setActiveSection(item.id)}
                 >
-                  {label}
+                  {item.label}
                 </a>
               </li>
             );

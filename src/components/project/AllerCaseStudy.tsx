@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ProjectMedia } from "@/components/project/ProjectMedia";
+import { ProjectResourceLinks } from "@/components/project/ProjectResourceLinks";
 import { ProjectSectionNav } from "@/components/project/ProjectSectionNav";
 import { allerCaseStudy } from "@/data/aller";
 import type { Project } from "@/types/project";
@@ -10,16 +11,20 @@ type AllerCaseStudyProps = {
 };
 
 const navigationItems = [
-  ["Overview", "overview"],
-  ["Demo", "service-demo"],
-  ["Architecture", "architecture"],
-  ["Pipeline", "pipeline"],
-  ["Hybrid RAG", "hybrid-rag"],
-  ["OCR", "ocr"],
-  ["Fit Score", "fit-score"],
-  ["Challenges", "challenges"],
-  ["Results", "results"],
+  { id: "overview", label: "Overview" },
+  { id: "service-demo", label: "Demo" },
+  { id: "architecture", label: "Architecture" },
+  { id: "data-pipeline", label: "Pipeline" },
+  { id: "hybrid-rag", label: "Hybrid RAG" },
+  { id: "ocr-analysis", label: "OCR" },
+  { id: "skin-fit-score", label: "Fit Score" },
+  { id: "technical-challenges", label: "Challenges" },
+  { id: "results-contribution", label: "Results" },
 ] as const;
+
+const overviewResourceLinks = allerCaseStudy.relatedLinks.filter(
+  (link) => link.label === "GitHub Repository" || link.label === "Final Presentation",
+);
 
 const architectureRoles = [
   ["React", "사용자 화면과 상호작용"],
@@ -113,24 +118,7 @@ export function AllerCaseStudy({ project }: AllerCaseStudyProps) {
             <div><dt className="text-xs font-bold uppercase tracking-wider text-slate-400">Role</dt><dd className="mt-2 text-sm font-semibold leading-6 text-slate-800">{allerCaseStudy.role}</dd></div>
           </dl>
 
-          <div className="mt-6 flex flex-wrap gap-3">
-            <a
-              className="inline-flex items-center gap-2 rounded-lg border border-blue-200 bg-blue-50 px-4 py-2.5 text-sm font-semibold text-blue-700 transition-colors hover:border-blue-300 hover:bg-blue-100"
-              href="https://github.com/bhjin97/Team-Grow"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              GitHub Repository <span aria-hidden="true">↗</span>
-            </a>
-            <a
-              className="inline-flex items-center gap-2 rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 transition-colors hover:border-blue-300 hover:text-blue-700"
-              href="/projects/aller/docs/aller-final-presentation.pdf"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              Final Presentation · PDF <span aria-hidden="true">↗</span>
-            </a>
-          </div>
+          <div className="mt-6"><ProjectResourceLinks links={overviewResourceLinks} /></div>
 
           <div className="mt-10 grid gap-10 lg:grid-cols-[1fr_1.2fr]">
             <div>
@@ -205,7 +193,7 @@ export function AllerCaseStudy({ project }: AllerCaseStudyProps) {
         </div>
       </section>
 
-      <section id="pipeline" className="scroll-mt-36 px-5 py-20 sm:px-8">
+      <section id="data-pipeline" className="scroll-mt-36 px-5 py-20 sm:px-8">
         <div className="mx-auto max-w-6xl">
           <SectionHeader title="Data Pipeline" subtitle="수집 결과를 운영 테이블에 바로 반영하지 않고 Stage 적재와 정제 단계를 분리했습니다." />
           <div className="rounded-2xl border border-slate-200 bg-slate-50 p-6 sm:p-8"><StepFlow steps={["Playwright 크롤링", "Stage 테이블 적재", "정제 및 Upsert", "MariaDB 운영 테이블 반영"]} /></div>
@@ -234,7 +222,7 @@ export function AllerCaseStudy({ project }: AllerCaseStudyProps) {
         </div>
       </section>
 
-      <section id="ocr" className="scroll-mt-36 px-5 py-20 sm:px-8">
+      <section id="ocr-analysis" className="scroll-mt-36 px-5 py-20 sm:px-8">
         <div className="mx-auto max-w-6xl">
           <SectionHeader title="OCR Analysis" subtitle="서비스 데이터베이스에 등록되지 않은 제품도 성분표를 기준으로 확인할 수 있도록 구성했습니다." />
           <div className="grid items-start gap-10 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)]">
@@ -244,7 +232,7 @@ export function AllerCaseStudy({ project }: AllerCaseStudyProps) {
         </div>
       </section>
 
-      <section id="fit-score" className="scroll-mt-36 bg-slate-50 px-5 py-20 sm:px-8">
+      <section id="skin-fit-score" className="scroll-mt-36 bg-slate-50 px-5 py-20 sm:px-8">
         <div className="mx-auto max-w-6xl">
           <SectionHeader title="Skin Fit Score" subtitle="피부 타입과 제품 성분 구성을 함께 고려해 0~100점의 적합도를 계산합니다." />
           <div className="rounded-2xl border border-slate-200 bg-white p-6 sm:p-8"><StepFlow steps={["피부 타입 확인", "전성분 효능군 분류", "상대 비율 계산", "중요도·목표 범위 적용", "0~100점 산출", "주의 성분 반영"]} /></div>
@@ -253,7 +241,7 @@ export function AllerCaseStudy({ project }: AllerCaseStudyProps) {
         </div>
       </section>
 
-      <section id="challenges" className="scroll-mt-36 px-5 py-20 sm:px-8">
+      <section id="technical-challenges" className="scroll-mt-36 px-5 py-20 sm:px-8">
         <div className="mx-auto max-w-6xl">
           <SectionHeader title="Technical Challenges" subtitle="처리 속도만이 아니라 실행 지속성과 검색 조건의 정확도를 기준으로 구조를 조정했습니다." />
           <div className="space-y-10">
@@ -262,7 +250,7 @@ export function AllerCaseStudy({ project }: AllerCaseStudyProps) {
         </div>
       </section>
 
-      <section id="results" className="scroll-mt-36 bg-slate-50 px-5 py-20 sm:px-8">
+      <section id="results-contribution" className="scroll-mt-36 bg-slate-50 px-5 py-20 sm:px-8">
         <div className="mx-auto max-w-6xl">
           <SectionHeader title="Results & Contribution" subtitle="수집한 데이터를 실제 검색과 추천 기능으로 연결한 서비스형 MVP를 완성했습니다." />
           <div className="grid items-stretch gap-10 lg:grid-cols-2">

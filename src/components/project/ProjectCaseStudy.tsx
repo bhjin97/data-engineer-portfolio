@@ -1,11 +1,22 @@
 import Link from "next/link";
 import { ProjectMedia } from "@/components/project/ProjectMedia";
 import { ProjectImageComparison } from "@/components/project/ProjectImageComparison";
+import { ProjectResourceLinks } from "@/components/project/ProjectResourceLinks";
 import { ProjectSectionNav } from "@/components/project/ProjectSectionNav";
-import { RelatedLinks } from "@/components/project/RelatedLinks";
 import type { Project, ProjectFlow } from "@/types/project";
 
 type ProjectCaseStudyProps = { project: Project };
+
+const navigationItems = [
+  { id: "overview", label: "Overview" },
+  { id: "data-flow", label: "Pipeline" },
+  { id: "decisions", label: "Decisions" },
+  { id: "modeling", label: "Modeling" },
+  { id: "operations", label: "Operations" },
+  { id: "troubleshooting", label: "Troubleshooting" },
+  { id: "validation", label: "Validation" },
+  { id: "next-step", label: "Next Step" },
+] as const;
 
 function SectionHeader({ title, subtitle }: { title: string; subtitle?: string }) {
   return <div className="mb-8"><h2 className="text-3xl font-bold tracking-tight text-slate-950 sm:text-4xl">{title}</h2>{subtitle ? <p className="mt-3 max-w-3xl text-base leading-7 text-slate-600">{subtitle}</p> : null}</div>;
@@ -33,6 +44,7 @@ export function ProjectCaseStudy({ project }: ProjectCaseStudyProps) {
             <div><dt className="text-xs font-bold uppercase tracking-wider text-slate-400">Role / Scope</dt><dd className="mt-2 font-semibold text-slate-800">{project.scope}</dd></div>
             <div><dt className="text-xs font-bold uppercase tracking-wider text-slate-400">Scope</dt><dd className="mt-2 text-sm leading-6 text-slate-600">{project.scopeDescription}</dd></div>
           </dl>
+          <div className="mt-6"><ProjectResourceLinks links={project.relatedLinks} /></div>
           <div className="mt-8 grid gap-5 sm:grid-cols-2">
             <div><p className="text-xs font-bold uppercase tracking-wider text-slate-400">Core Technology</p><p className="mt-3 text-sm leading-7 text-slate-700">{project.coreTechnologies?.join(" · ")}</p></div>
             <div><p className="text-xs font-bold uppercase tracking-wider text-slate-400">Supporting Technology</p><p className="mt-3 text-sm leading-7 text-slate-600">{supportingTechnologies?.map((technology) => technology.name).join(" · ")}</p></div>
@@ -40,7 +52,7 @@ export function ProjectCaseStudy({ project }: ProjectCaseStudyProps) {
         </div>
       </section>
 
-      <ProjectSectionNav />
+      <ProjectSectionNav items={navigationItems} />
 
       <section id="problem-goal" className="scroll-mt-20 px-5 py-20 sm:px-8"><div className="mx-auto max-w-6xl"><SectionHeader title="Problem & Goal" />
         <div className="grid gap-10 lg:grid-cols-2"><div className="space-y-4 text-base leading-8 text-slate-600">{study.problem.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}</div><div><p className="text-lg font-semibold leading-8 text-slate-900">{study.goal}</p><dl className="mt-6 space-y-4">{study.goalItems.map((goal) => <div className="border-l-2 border-blue-500 pl-4" key={goal.label}><dt className="text-xs font-bold uppercase tracking-wider text-blue-700">{goal.label}</dt><dd className="mt-1 text-sm text-slate-600">{goal.description}</dd></div>)}</dl></div></div>
@@ -77,7 +89,6 @@ export function ProjectCaseStudy({ project }: ProjectCaseStudyProps) {
       <section id="next-step" className="scroll-mt-36 bg-slate-50 px-5 py-20 sm:px-8"><div className="mx-auto max-w-6xl"><SectionHeader title="Limitations & Next Step" subtitle="검증 범위를 명확히 하고 다음 개선 방향을 정리했습니다." />
         <div className="grid gap-5 sm:grid-cols-2">{study.limitations.map((item) => <article className="border-t-2 border-slate-800 pt-5" key={item.index}><p className="text-xs font-bold text-blue-700">{item.index}</p><h3 className="mt-2 text-lg font-bold text-slate-950">{item.title}</h3><p className="mt-4 text-sm leading-6 text-slate-600"><strong className="text-slate-900">Limitation.</strong> {item.limitation}</p><p className="mt-3 text-sm leading-6 text-slate-600"><strong className="text-blue-700">Next.</strong> {item.next}</p></article>)}</div>
         <p className="mt-16 max-w-4xl border-l-4 border-blue-600 pl-6 text-xl font-semibold leading-9 text-slate-800">{study.conclusion}</p>
-        <div className="mt-14"><RelatedLinks links={project.relatedLinks} /></div>
       </div></section>
     </main>
   );
