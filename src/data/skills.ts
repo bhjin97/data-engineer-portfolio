@@ -23,15 +23,27 @@ export const skills: SkillGroup[] = [
     ],
   },
   {
-    category: "Orchestration",
-    items: [{ name: "Apache Airflow", badgeUrl: badge("Apache Airflow", "017CEE", "apacheairflow") }],
+    category: "Orchestration & Collection",
+    items: [
+      { name: "Apache Airflow", badgeUrl: badge("Apache Airflow", "017CEE", "apacheairflow") },
+      { name: "Playwright", badgeUrl: badge("Playwright", "2EAD33", "playwright") },
+    ],
   },
   {
     category: "Storage & Database",
     items: [
       { name: "PostgreSQL", badgeUrl: badge("PostgreSQL", "4169E1", "postgresql") },
+      { name: "MariaDB", badgeUrl: badge("MariaDB", "003545", "mariadb") },
       { name: "MinIO", badgeUrl: badge("MinIO", "C72E49", "minio") },
       { name: "Redis", badgeUrl: badge("Redis", "DC382D", "redis") },
+    ],
+  },
+  {
+    category: "AI & Search",
+    items: [
+      { name: "LangChain", badgeUrl: badge("LangChain", "1C3C3C", "langchain") },
+      { name: "OpenAI API", badgeUrl: badge("OpenAI API", "412991", "openai") },
+      { name: "Pinecone", badgeUrl: badge("Pinecone", "000000", "pinecone") },
     ],
   },
   {
@@ -39,6 +51,7 @@ export const skills: SkillGroup[] = [
     items: [
       { name: "Docker", badgeUrl: badge("Docker", "2496ED", "docker") },
       { name: "Linux", badgeUrl: badge("Linux", "333333", "linux", "FCC624") },
+      { name: "AWS", badgeUrl: badge("AWS", "FF9900", "amazonwebservices", "232F3E") },
     ],
   },
   {

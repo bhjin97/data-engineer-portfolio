@@ -18,7 +18,8 @@ export const education: Education[] = [
     subject: "클라우드 기반 데이터 분석 및 서비스 개발",
     description: "클라우드 기반 데이터 분석 및 서비스 개발 과정",
     project: {
-      name: "Aller",
+      name: "Aller - AI 기반 화장품 검색·추천 서비스",
+      href: "/projects/aller",
     },
   },
 ];

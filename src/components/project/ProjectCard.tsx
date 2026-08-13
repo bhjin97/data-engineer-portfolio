@@ -65,12 +65,9 @@ export function ProjectCard({ project, prominence = "secondary" }: ProjectCardPr
 
   return (
     <article className={`rounded-2xl border p-6 ${isPlanned ? "border-dashed border-slate-300 bg-transparent text-slate-500" : "border-slate-200 bg-white shadow-sm"}`}>
-      <div className="flex items-start justify-between gap-4">
-        <div>
-          <h3 className="text-xl font-bold tracking-tight text-slate-950">{project.title}</h3>
-          {project.subtitle ? <p className="mt-2 text-sm font-medium text-slate-500">{project.subtitle}</p> : null}
-        </div>
-        <span className="shrink-0 rounded-full bg-blue-50 px-3 py-1 text-xs font-medium text-blue-700">{project.status}</span>
+      <div>
+        <h3 className="text-xl font-bold tracking-tight text-slate-950">{project.title}</h3>
+        {project.subtitle ? <p className="mt-2 text-sm font-medium text-slate-500">{project.subtitle}</p> : null}
       </div>
       <p className="mt-4 text-sm leading-7 text-slate-600">{project.summary}</p>
       <div className="mt-7 flex flex-wrap items-center gap-4 text-sm font-semibold">

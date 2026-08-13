@@ -17,7 +17,7 @@ export function EducationSection() {
               <div className="mt-4 sm:mt-0">
                 <h3 className="text-lg font-bold text-slate-950">{item.name}</h3>
                 <p className="mt-2 text-sm leading-6 text-slate-600">{item.subject}</p>
-                {item.project ? <p className="mt-4 text-sm"><span className="mr-2 text-xs font-semibold uppercase tracking-wider text-slate-400">Project</span>{item.project.href ? <Link className="font-semibold text-blue-700 hover:text-blue-800" href={item.project.href}>{item.project.name}</Link> : <span className="font-medium text-slate-700">{item.project.name}</span>}</p> : null}
+                {item.project ? <p className="mt-4 text-sm"><span className="mr-2 text-xs font-semibold uppercase tracking-wider text-slate-400">Project</span>{item.project.href ? <Link className="font-semibold text-blue-700 underline-offset-4 hover:text-blue-800 hover:underline focus-visible:rounded-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600" href={item.project.href}>{item.project.name}</Link> : <span className="font-medium text-slate-700">{item.project.name}</span>}</p> : null}
               </div>
             </li>
           ))}
