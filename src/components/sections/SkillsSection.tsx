@@ -30,6 +30,7 @@ export function SkillsSection() {
               )}
             </div>
           ))}
+          <div aria-hidden="true" className="hidden bg-white sm:block" />
         </div>
       </div>
     </section>

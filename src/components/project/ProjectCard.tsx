@@ -7,9 +7,9 @@ type ProjectCardProps = {
 };
 
 const contributionItems = [
-  ["DATA", "제품·리뷰 데이터 파이프라인"],
-  ["SEARCH", "Hybrid RAG 통합 및 라우팅"],
-  ["DEPLOY", "Docker · AWS ECR · EC2"],
+  ["DATA", "제품·리뷰 데이터 파이프라인", "수집·정제·적재 및 Upsert 구조 구축"],
+  ["SEARCH", "Hybrid RAG 통합 및 라우팅", "질문 조건에 따른 RDB·Vector DB 검색 경로 설계"],
+  ["DEPLOY", "Docker · AWS ECR · EC2", "컨테이너 이미지 빌드 및 클라우드 배포 구성"],
 ] as const;
 
 const metricDescriptions: Record<string, string> = {
@@ -56,9 +56,9 @@ export function ProjectCard({ project, number }: ProjectCardProps) {
         </div>
       </div>
 
-      <aside className="border-t border-slate-200 bg-slate-50/70 p-6 sm:p-8 md:border-l md:border-t-0 lg:p-9" aria-label={isMetaPipeline ? "프로젝트 핵심 검증 결과" : "프로젝트 핵심 기여"}>
+      <aside className={`border-t border-slate-200 bg-slate-50/70 p-6 sm:p-8 md:border-l md:border-t-0 lg:p-9 ${isMetaPipeline ? "" : "lg:flex lg:flex-col"}`} aria-label={isMetaPipeline ? "프로젝트 핵심 검증 결과" : "프로젝트 핵심 기여"}>
         <p className="text-xs font-bold uppercase tracking-[0.16em] text-blue-700">{isMetaPipeline ? "Key Results" : "Core Contribution"}</p>
-        <dl className="mt-5 divide-y divide-slate-200 border-y border-slate-200">
+        <dl className={`mt-5 divide-y divide-slate-200 border-y border-slate-200 ${isMetaPipeline ? "" : "lg:grid lg:flex-1 lg:grid-rows-3"}`}>
           {isMetaPipeline
             ? project.metrics?.map((metric) => {
                 const label = metric.unit ?? metric.label;
@@ -72,10 +72,13 @@ export function ProjectCard({ project, number }: ProjectCardProps) {
                   </div>
                 );
               })
-            : contributionItems.map(([label, description]) => (
-                <div className="grid gap-1 py-4 sm:grid-cols-[5rem_1fr] sm:gap-x-4" key={label}>
+            : contributionItems.map(([label, contribution, description]) => (
+                <div className="grid gap-1 py-4 sm:grid-cols-[5rem_1fr] sm:gap-x-4 lg:items-center" key={label}>
                   <dt className="text-xs font-bold uppercase tracking-[0.12em] text-slate-500">{label}</dt>
-                  <dd className="text-sm font-semibold leading-6 text-slate-800">{description}</dd>
+                  <dd className="min-w-0">
+                    <p className="break-words text-sm font-bold leading-5 tracking-tight text-slate-950">{contribution}</p>
+                    <p className="mt-1 text-xs leading-4 text-slate-600">{description}</p>
+                  </dd>
                 </div>
               ))}
         </dl>
