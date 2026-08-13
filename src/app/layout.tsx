@@ -15,8 +15,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "데이터 엔지니어 포트폴리오",
-  description: "데이터 엔지니어 취업용 개인 포트폴리오",
+  title: "배형진 | Data Engineer Portfolio",
+  description:
+    "Kafka, Spark, Airflow 기반 데이터 파이프라인과 Hybrid RAG 프로젝트를 담은 배형진의 데이터 엔지니어 포트폴리오",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

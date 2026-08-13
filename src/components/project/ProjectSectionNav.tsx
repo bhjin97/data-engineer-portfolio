@@ -67,7 +67,7 @@ export function ProjectSectionNav({ items }: ProjectSectionNavProps) {
               <li key={item.id}>
                 <a
                   aria-current={isActive ? "location" : undefined}
-                  className={`relative flex min-h-11 items-center rounded-sm px-2 transition-colors hover:text-blue-700 focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-blue-600 sm:min-h-0 sm:px-0 sm:pb-2 sm:pt-1 ${
+                  className={`relative flex min-h-11 items-center rounded-sm px-2 transition-colors hover:text-blue-700 focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-blue-600 lg:min-h-0 lg:px-0 lg:pb-2 lg:pt-1 ${
                     isActive
                       ? "font-semibold text-blue-700 after:absolute after:inset-x-0 after:bottom-0 after:h-0.5 after:bg-blue-600"
                       : "font-medium"

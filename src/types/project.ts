@@ -81,6 +81,8 @@ export type ProjectMedia = {
   alt: string;
   label: string;
   description?: string;
+  width?: number;
+  height?: number;
 };
 
 export type ProjectMediaComparison = {
@@ -143,6 +145,7 @@ export type Project = {
   featuredSummary?: string;
   status: ProjectStatus;
   featured: boolean;
+  isPublished?: boolean;
   detailKind?: ProjectDetailKind;
   featuredOrder?: number;
   subtitle?: string;

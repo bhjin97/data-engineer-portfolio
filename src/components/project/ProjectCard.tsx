@@ -22,7 +22,7 @@ export function ProjectCard({ project, number }: ProjectCardProps) {
   const githubLink = project.relatedLinks.find((link) => link.label.toLowerCase().includes("github"));
   const isMetaPipeline = project.slug === "meta-pipeline";
   const projectLabel = isMetaPipeline ? "Representative Project" : "Team Project · Lead";
-  const linkClass = "group/link inline-flex min-h-11 items-center rounded-sm px-1 text-sm font-semibold focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 sm:min-h-0 sm:px-0";
+  const linkClass = "group/link -my-3 inline-flex min-h-11 items-center rounded-sm px-1 text-sm font-semibold focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 lg:my-0 lg:min-h-0 lg:px-0";
 
   return (
     <article className="grid overflow-hidden rounded-2xl border border-slate-200 border-l-blue-500 bg-white shadow-sm transition-[border-color,box-shadow,transform] duration-200 motion-safe:hover:-translate-y-px hover:border-blue-200 hover:shadow-md motion-reduce:transform-none md:grid-cols-[minmax(0,3fr)_minmax(17rem,2fr)] lg:min-h-[390px]">

@@ -14,6 +14,8 @@ type ProjectMediaProps = {
 export function ProjectMedia({ media, compact = false, contained = false, hideCaption = false, wide = false }: ProjectMediaProps) {
   const publicPath = join(process.cwd(), "public", media.src.replace(/^\//, ""));
   const hasImage = existsSync(publicPath);
+  const width = media.width ?? 1600;
+  const height = media.height ?? (compact ? 720 : 900);
 
   return (
     <figure className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
@@ -21,22 +23,23 @@ export function ProjectMedia({ media, compact = false, contained = false, hideCa
         <div className="relative aspect-[4/3] w-full bg-slate-50">
           <Image
             alt={media.alt}
-            className="object-contain"
-            fill
+            className="h-full w-full object-contain"
+            height={height}
             sizes="(max-width: 1023px) 100vw, 46vw"
             src={media.src}
+            width={width}
           />
         </div>
       ) : hasImage && wide ? (
-        <Image alt={media.alt} className="h-auto w-full object-contain" height={300} sizes="(max-width: 1200px) 100vw, 1120px" src={media.src} width={1500} />
+        <Image alt={media.alt} className="h-auto w-full object-contain" height={height} sizes="(max-width: 1200px) 100vw, 1120px" src={media.src} width={width} />
       ) : hasImage ? (
         <Image
           alt={media.alt}
           className="h-auto w-full object-contain"
-          height={compact ? 720 : 900}
+          height={height}
           sizes={compact ? "(max-width: 768px) 100vw, 50vw" : "(max-width: 1200px) 100vw, 1120px"}
           src={media.src}
-          width={1600}
+          width={width}
         />
       ) : (
         <div className={`flex items-center justify-center bg-slate-50 px-6 text-center ${contained ? "aspect-[4/3]" : compact ? "min-h-48" : "min-h-64 sm:min-h-80"}`}>

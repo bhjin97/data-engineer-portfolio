@@ -10,7 +10,9 @@ import { getProjectBySlug, projects } from "@/data/projects";
 export const dynamicParams = false;
 
 export function generateStaticParams() {
-  return projects.map((project) => ({ slug: project.slug }));
+  return projects
+    .filter((project) => project.isPublished !== false)
+    .map((project) => ({ slug: project.slug }));
 }
 
 export async function generateMetadata(
@@ -18,10 +20,11 @@ export async function generateMetadata(
 ): Promise<Metadata> {
   const { slug } = await props.params;
   const project = getProjectBySlug(slug);
+  const publicProject = project?.isPublished !== false ? project : undefined;
 
   return {
-    title: project ? `${project.title} | 데이터 엔지니어 포트폴리오` : "프로젝트",
-    description: project?.summary,
+    title: publicProject ? `${publicProject.title} | 데이터 엔지니어 포트폴리오` : "프로젝트",
+    description: publicProject?.summary,
   };
 }
 
@@ -29,7 +32,7 @@ export default async function ProjectPage(props: PageProps<"/projects/[slug]">) 
   const { slug } = await props.params;
   const project = getProjectBySlug(slug);
 
-  if (!project) {
+  if (!project || project.isPublished === false) {
     notFound();
   }
 

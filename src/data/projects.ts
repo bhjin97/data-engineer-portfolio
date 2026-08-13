@@ -208,11 +208,15 @@ export const projects: Project[] = [
             src: "/projects/meta-pipeline/troubleshooting-before.png",
             alt: "Streaming Query 문제 해결 전 Grafana 모니터링",
             label: "Troubleshooting Before",
+            width: 2088,
+            height: 1133,
           },
           after: {
             src: "/projects/meta-pipeline/troubleshooting-after.png",
             alt: "Streaming Query 문제 해결 후 Grafana 모니터링",
             label: "Troubleshooting After",
+            width: 2194,
+            height: 1069,
           },
         },
       },
@@ -259,6 +263,8 @@ export const projects: Project[] = [
         src: "/projects/meta-pipeline/architecture.png",
         alt: "E-Commerce Hybrid Data Pipeline 전체 아키텍처",
         label: "Architecture",
+        width: 1541,
+        height: 722,
       },
       decisions: [
         {
@@ -305,9 +311,9 @@ export const projects: Project[] = [
         },
       ],
       operationsImages: [
-        { src: "/projects/meta-pipeline/airflow-dag.png", alt: "Airflow Batch DAG", label: "Airflow DAG" },
-        { src: "/projects/meta-pipeline/slack-notification.png", alt: "Airflow 실행 결과 Slack 알림", label: "Slack Notification" },
-        { src: "/projects/meta-pipeline/grafana-monitoring.png", alt: "Streaming 및 시스템 리소스 Grafana 모니터링", label: "Grafana Monitoring" },
+        { src: "/projects/meta-pipeline/airflow-dag.png", alt: "Airflow Batch DAG", label: "Airflow DAG", width: 1660, height: 624 },
+        { src: "/projects/meta-pipeline/slack-notification.png", alt: "Airflow 실행 결과 Slack 알림", label: "Slack Notification", width: 675, height: 283 },
+        { src: "/projects/meta-pipeline/grafana-monitoring.png", alt: "Streaming 및 시스템 리소스 Grafana 모니터링", label: "Grafana Monitoring", width: 1881, height: 554 },
       ],
       validations: [
         {
@@ -318,7 +324,7 @@ export const projects: Project[] = [
           index: "02", label: "Load Test", question: "입력 부하가 증가해도 데이터 흐름이 유지되는가?", value: "10,000", unit: "EPS",
           description: "10,000 EPS 입력 조건에서 Kafka → Spark Structured Streaming → MinIO까지 전체 데이터 흐름과 적재 상태를 검증했습니다.",
           limitation: "Producer가 약 11,000 EPS에서 먼저 병목되어 Spark 자체의 처리 한계까지 측정한 결과는 아닙니다.",
-          image: { src: "/projects/meta-pipeline/load-test-10k.png", alt: "10,000 EPS 부하 테스트 Grafana 지표", label: "10K EPS Load Test" },
+          image: { src: "/projects/meta-pipeline/load-test-10k.png", alt: "10,000 EPS 부하 테스트 Grafana 지표", label: "10K EPS Load Test", width: 2194, height: 1069 },
         },
         {
           index: "03", label: "Query Optimization", question: "Analytics Serving Query를 개선할 수 있는가?", value: "19.810 ms → 0.074 ms",
@@ -333,8 +339,8 @@ export const projects: Project[] = [
             indexName: "idx_mart_customer_segment_occupation",
           },
           comparison: {
-            before: { src: "/projects/meta-pipeline/index-before.png", alt: "PostgreSQL 인덱스 적용 전 실행 계획과 실행 시간", label: "Index Before" },
-            after: { src: "/projects/meta-pipeline/index-after.png", alt: "PostgreSQL 인덱스 적용 후 실행 계획과 실행 시간", label: "Index After" },
+            before: { src: "/projects/meta-pipeline/index-before.png", alt: "PostgreSQL 인덱스 적용 전 실행 계획과 실행 시간", label: "Index Before", width: 418, height: 193 },
+            after: { src: "/projects/meta-pipeline/index-after.png", alt: "PostgreSQL 인덱스 적용 후 실행 계획과 실행 시간", label: "Index After", width: 427, height: 170 },
           },
         },
       ],
@@ -438,6 +444,7 @@ export const projects: Project[] = [
     summary: "새 프로젝트를 추가하기 위한 placeholder입니다.",
     status: "예정",
     featured: false,
+    isPublished: false,
     details: createPlaceholderDetails("Future Project"),
     relatedLinks: [],
   },

@@ -36,7 +36,7 @@ export function ProjectCaseStudy({ project }: ProjectCaseStudyProps) {
     <main className="bg-white">
       <section id="overview" className="border-b border-slate-200 px-5 py-16 sm:px-8 sm:py-24">
         <div className="mx-auto max-w-6xl">
-          <Link className="text-sm font-semibold text-blue-700 hover:text-blue-800" href="/#projects">← 프로젝트 목록</Link>
+          <Link className="inline-flex min-h-11 items-center rounded-sm text-sm font-semibold text-blue-700 hover:text-blue-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 lg:min-h-0" href="/#projects">← 프로젝트 목록</Link>
           <p className="mt-12 text-xs font-bold uppercase tracking-[0.18em] text-blue-700">{project.projectType}</p>
           <h1 className="mt-4 max-w-4xl text-4xl font-bold tracking-tight text-slate-950 sm:text-6xl">{project.title}</h1>
           {project.subtitle ? <p className="mt-4 text-lg font-medium text-slate-500 sm:text-xl">{project.subtitle}</p> : null}

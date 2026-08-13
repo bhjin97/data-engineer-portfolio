@@ -11,7 +11,7 @@ const navigation = [
   ["About", "/#about"],
 ] as const;
 
-const linkClass = "inline-flex min-h-11 items-center rounded-sm px-1 transition-colors hover:text-blue-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 sm:min-h-0 sm:px-0";
+const linkClass = "inline-flex min-h-11 items-center rounded-sm px-1 transition-colors hover:text-blue-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 lg:min-h-0 lg:px-0";
 
 export function Header() {
   const [isOpen, setIsOpen] = useState(false);
@@ -38,7 +38,7 @@ export function Header() {
   return (
     <header ref={headerRef} className="sticky top-0 z-50 border-b border-slate-200/90 bg-white/95">
       <div className="relative mx-auto flex min-h-16 max-w-6xl items-center justify-between gap-6 px-5 sm:px-8">
-        <Link className="shrink-0 rounded-sm text-sm font-bold tracking-tight text-slate-950 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 sm:text-base" href="/">
+        <Link className="inline-flex min-h-11 shrink-0 items-center rounded-sm text-sm font-bold tracking-tight text-slate-950 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 sm:text-base lg:min-h-0" href="/">
           {profile.name}
         </Link>
 

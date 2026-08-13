@@ -90,7 +90,7 @@ export function AllerCaseStudy({ project }: AllerCaseStudyProps) {
     <main className="bg-white">
       <section id="overview" className="border-b border-slate-200 px-5 py-16 sm:px-8 sm:py-24">
         <div className="mx-auto max-w-6xl">
-          <Link className="text-sm font-semibold text-blue-700 hover:text-blue-800" href="/#projects">
+          <Link className="inline-flex min-h-11 items-center rounded-sm text-sm font-semibold text-blue-700 hover:text-blue-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 lg:min-h-0" href="/#projects">
             ← 프로젝트 목록
           </Link>
           <div className="mt-12 grid items-start gap-10 lg:grid-cols-[1fr_260px]">
