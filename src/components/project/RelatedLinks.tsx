@@ -2,9 +2,10 @@ import type { ProjectLink } from "@/types/project";
 
 type RelatedLinksProps = {
   links: ProjectLink[];
+  openInNewTab?: boolean;
 };
 
-export function RelatedLinks({ links }: RelatedLinksProps) {
+export function RelatedLinks({ links, openInNewTab = false }: RelatedLinksProps) {
   return (
     <section className="border-t border-zinc-200 py-8">
       <h2 className="text-xl font-semibold">Related Links</h2>
@@ -12,7 +13,12 @@ export function RelatedLinks({ links }: RelatedLinksProps) {
         <ul className="mt-3 space-y-2">
           {links.map((link) => (
             <li key={link.href}>
-              <a className="underline underline-offset-4" href={link.href}>
+              <a
+                className="underline underline-offset-4"
+                href={link.href}
+                rel={openInNewTab ? "noopener noreferrer" : undefined}
+                target={openInNewTab ? "_blank" : undefined}
+              >
                 {link.label}
               </a>
             </li>

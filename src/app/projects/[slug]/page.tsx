@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { AllerCaseStudy } from "@/components/project/AllerCaseStudy";
 import { ProjectDetailSection } from "@/components/project/ProjectDetailSection";
 import { ProjectCaseStudy } from "@/components/project/ProjectCaseStudy";
 import { RelatedLinks } from "@/components/project/RelatedLinks";
@@ -30,6 +31,10 @@ export default async function ProjectPage(props: PageProps<"/projects/[slug]">) 
 
   if (!project) {
     notFound();
+  }
+
+  if (project.detailKind === "aller") {
+    return <AllerCaseStudy project={project} />;
   }
 
   if (project.caseStudy) {

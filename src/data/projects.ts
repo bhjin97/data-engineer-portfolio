@@ -1,4 +1,5 @@
 import type { Project } from "@/types/project";
+import { allerCaseStudy } from "@/data/aller";
 
 const placeholderDetails = [
   ["overview", "Overview"],
@@ -400,11 +401,32 @@ export const projects: Project[] = [
   {
     slug: "aller",
     title: "Aller",
-    summary: "프로젝트 상세 내용을 정리할 예정입니다.",
-    status: "정리 중",
+    subtitle: "AI 기반 화장품 검색·추천 서비스",
+    summary:
+      "제품·리뷰 데이터 파이프라인과 Hybrid RAG 검색을 결합해 사용자 조건에 맞는 화장품과 추천 근거를 제공하는 서비스입니다.",
+    status: "완료",
     featured: true,
-    details: createPlaceholderDetails("Aller"),
-    relatedLinks: [],
+    detailKind: "aller",
+    projectType: "5인 팀 프로젝트",
+    scope: "Team Lead · Data Pipeline · Hybrid RAG · Deployment",
+    coreTechnologies: ["Python", "Airflow", "MariaDB", "LangChain", "Pinecone", "Docker"],
+    technologies: [
+      { name: "Python", responsibility: "Data" },
+      { name: "pandas", responsibility: "Data" },
+      { name: "Playwright", responsibility: "Data" },
+      { name: "Airflow", responsibility: "Data" },
+      { name: "MariaDB", responsibility: "Data" },
+      { name: "LangChain", responsibility: "AI & Search" },
+      { name: "OpenAI API", responsibility: "AI & Search" },
+      { name: "Pinecone", responsibility: "AI & Search" },
+      { name: "FastAPI", responsibility: "Application" },
+      { name: "React", responsibility: "Application" },
+      { name: "Docker", responsibility: "Infra" },
+      { name: "AWS EC2", responsibility: "Infra" },
+      { name: "AWS ECR", responsibility: "Infra" },
+    ],
+    details: [],
+    relatedLinks: allerCaseStudy.relatedLinks,
   },
   {
     slug: "future-project",

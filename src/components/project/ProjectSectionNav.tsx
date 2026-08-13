@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-const items = [
+export const metaPipelineSectionNavItems = [
   ["Overview", "overview"],
   ["Pipeline", "data-flow"],
   ["Decisions", "decisions"],
@@ -13,8 +13,12 @@ const items = [
   ["Next Step", "next-step"],
 ] as const;
 
-export function ProjectSectionNav() {
-  const [activeSection, setActiveSection] = useState<(typeof items)[number][1]>("overview");
+type ProjectSectionNavProps = {
+  items?: ReadonlyArray<readonly [label: string, id: string]>;
+};
+
+export function ProjectSectionNav({ items = metaPipelineSectionNavItems }: ProjectSectionNavProps) {
+  const [activeSection, setActiveSection] = useState(items[0]?.[1] ?? "");
 
   useEffect(() => {
     const sections = items
@@ -25,11 +29,11 @@ export function ProjectSectionNav() {
     const updateActiveSection = () => {
       frameId = 0;
       const marker = window.scrollY + 145;
-      let currentSection: (typeof items)[number][1] = items[0][1];
+      let currentSection = items[0]?.[1] ?? "";
 
       for (const section of sections) {
         if (section.offsetTop <= marker) {
-          currentSection = section.id as (typeof items)[number][1];
+          currentSection = section.id;
         } else {
           break;
         }
@@ -53,7 +57,7 @@ export function ProjectSectionNav() {
       window.removeEventListener("resize", handleScroll);
       if (frameId !== 0) window.cancelAnimationFrame(frameId);
     };
-  }, []);
+  }, [items]);
 
   return (
     <nav

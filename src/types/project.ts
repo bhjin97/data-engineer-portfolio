@@ -1,4 +1,6 @@
-export type ProjectStatus = "정리 중" | "예정";
+export type ProjectStatus = "완료" | "정리 중" | "예정";
+
+export type ProjectDetailKind = "aller";
 
 export type ProjectDetailSection = {
   id: string;
@@ -141,6 +143,7 @@ export type Project = {
   featuredSummary?: string;
   status: ProjectStatus;
   featured: boolean;
+  detailKind?: ProjectDetailKind;
   featuredOrder?: number;
   subtitle?: string;
   projectType?: string;
