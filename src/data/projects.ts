@@ -413,7 +413,7 @@ export const projects: Project[] = [
     detailKind: "aller",
     projectType: "5인 팀 프로젝트",
     scope: "Team Lead · Data Pipeline · Hybrid RAG · Deployment",
-    coreTechnologies: ["Python", "Airflow", "MariaDB", "LangChain", "Pinecone", "Docker"],
+    coreTechnologies: ["Airflow", "MariaDB", "LangChain", "Pinecone", "Docker"],
     technologies: [
       { name: "Python", responsibility: "Data" },
       { name: "pandas", responsibility: "Data" },
@@ -437,7 +437,7 @@ export const projects: Project[] = [
     title: "Future Project",
     summary: "새 프로젝트를 추가하기 위한 placeholder입니다.",
     status: "예정",
-    featured: true,
+    featured: false,
     details: createPlaceholderDetails("Future Project"),
     relatedLinks: [],
   },

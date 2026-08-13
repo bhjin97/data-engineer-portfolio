@@ -37,10 +37,11 @@ const architectureRoles = [
 ] as const;
 
 const searchStrategies = [
-  ["제품 특징", "Pinecone 의미 검색", "MariaDB 상세 조회"],
-  ["특징 + 일부 명시 조건", "Pinecone 후보 생성", "MariaDB 조건 필터링"],
-  ["특징 + 강한 명시 조건", "MariaDB 후보 축소", "Pinecone 벡터 조회 · cosine similarity 재정렬"],
-  ["명시 조건", "MariaDB 조건 검색", "RDB-only"],
+  ["제품 특징만", "Pinecone", "MariaDB 상세 조회"],
+  ["특징 + 일부 명시 조건", "Pinecone", "MariaDB 조건 필터링"],
+  ["특징 + 모든 주요 조건", "MariaDB", "Pinecone 벡터 조회 후 cosine similarity 재정렬"],
+  ["명시 조건만", "MariaDB", "조건 검색 결과 반환"],
+  ["강한 조건에서 RDB 결과 없음", "Pinecone 폴백", "MariaDB 재필터링"],
 ] as const;
 
 const fitScoreRules = [
@@ -141,7 +142,7 @@ export function AllerCaseStudy({ project }: AllerCaseStudyProps) {
 
       <ProjectSectionNav items={navigationItems} />
 
-      <section id="problem-goal" className="scroll-mt-36 px-5 py-20 sm:px-8">
+      <section id="problem-goal" className="scroll-mt-36 px-5 py-14 sm:px-8 sm:py-20">
         <div className="mx-auto max-w-6xl">
           <SectionHeader title="Problem & Goal" subtitle="성분 정보, 피부 조건, 자연어 표현을 하나의 검색과 분석 흐름에서 다루고자 했습니다." />
           <div className="grid items-stretch gap-10 lg:grid-cols-2">
@@ -151,7 +152,7 @@ export function AllerCaseStudy({ project }: AllerCaseStudyProps) {
         </div>
       </section>
 
-      <section id="service-demo" className="scroll-mt-36 border-y border-slate-200 px-5 py-20 sm:px-8">
+      <section id="service-demo" className="scroll-mt-36 border-y border-slate-200 px-5 py-14 sm:px-8 sm:py-20">
         <div className="mx-auto max-w-6xl">
           <SectionHeader title="Service Demo" subtitle="회원가입과 피부 타입 진단부터 자연어 제품 추천, 즐겨찾기와 주의 성분 설정, 피부 적합도 계산 및 OCR 성분 분석까지 Aller의 주요 사용자 흐름을 확인할 수 있습니다." />
           <a
@@ -182,7 +183,7 @@ export function AllerCaseStudy({ project }: AllerCaseStudyProps) {
         </div>
       </section>
 
-      <section id="architecture" className="scroll-mt-36 bg-slate-50 px-5 py-20 sm:px-8">
+      <section id="architecture" className="scroll-mt-36 bg-slate-50 px-5 py-14 sm:px-8 sm:py-20">
         <div className="mx-auto max-w-6xl">
           <SectionHeader title="Architecture" subtitle="제품 데이터의 수집·저장부터 자연어 검색과 사용자 응답까지 연결한 전체 시스템 구조입니다." />
           <ProjectMedia media={allerCaseStudy.architectureImage} />
@@ -193,11 +194,11 @@ export function AllerCaseStudy({ project }: AllerCaseStudyProps) {
         </div>
       </section>
 
-      <section id="data-pipeline" className="scroll-mt-36 px-5 py-20 sm:px-8">
+      <section id="data-pipeline" className="scroll-mt-36 px-5 py-14 sm:px-8 sm:py-20">
         <div className="mx-auto max-w-6xl">
           <SectionHeader title="Data Pipeline" subtitle="수집 결과를 운영 테이블에 바로 반영하지 않고 Stage 적재와 정제 단계를 분리했습니다." />
           <div className="rounded-2xl border border-slate-200 bg-slate-50 p-6 sm:p-8"><StepFlow steps={["Playwright 크롤링", "Stage 테이블 적재", "정제 및 Upsert", "MariaDB 운영 테이블 반영"]} /></div>
-          <div className="mt-8"><ProjectMedia media={allerCaseStudy.pipelineImage} /></div>
+          <div className="mt-8"><ProjectMedia media={allerCaseStudy.pipelineImage} wide /></div>
           <div className="mt-10 grid gap-6 lg:grid-cols-2">
             <div><h3 className="text-xl font-bold text-slate-950">Weekly Update</h3><ul className="mt-5 space-y-3 text-sm leading-6 text-slate-600"><li>스킨·토너, 에센스·세럼·앰플, 크림, 선크림 카테고리의 제품과 리뷰 수집·정제</li><li>기존 데이터는 갱신하고 신규 데이터는 추가하는 Upsert 적용</li><li>Airflow에서 매주 월요일 오전 10시 실행</li><li>수집 단계와 운영 테이블 반영 단계를 분리한 갱신 구조</li></ul></div>
             <div className="rounded-2xl border border-blue-200 bg-blue-50 p-6"><p className="text-xs font-bold uppercase tracking-wider text-blue-700">Personal Contribution</p><p className="mt-4 leading-7 text-slate-700">제품·리뷰 데이터의 크롤링, 적재, 정제 및 Upsert 파이프라인을 담당했습니다. 전성분 원천 데이터 수집은 담당 범위에서 제외됩니다.</p></div>
@@ -205,24 +206,30 @@ export function AllerCaseStudy({ project }: AllerCaseStudyProps) {
         </div>
       </section>
 
-      <section id="hybrid-rag" className="scroll-mt-36 bg-slate-50 px-5 py-20 sm:px-8">
+      <section id="hybrid-rag" className="scroll-mt-36 bg-slate-50 px-5 py-14 sm:px-8 sm:py-20">
         <div className="mx-auto max-w-6xl">
           <SectionHeader title="Hybrid RAG" subtitle="정확 조건 검색과 자연어 의미 검색을 질문의 조건 조합에 따라 연결했습니다." />
-          <p className="max-w-4xl leading-8 text-slate-600">사용자 질문에는 사용감·효과 같은 의미 기반 특징과 브랜드·가격·카테고리·성분처럼 정확한 필터가 함께 포함될 수 있어 하나의 검색 방식만으로 처리하기 어려웠습니다.</p>
-          <div className="mt-8"><ProjectMedia media={allerCaseStudy.ragImage} /></div>
-          <div className="mt-10 grid gap-8 lg:grid-cols-2">
-            <div><h3 className="text-xl font-bold text-slate-950">Question Analysis</h3><ul className="mt-5 space-y-3 text-sm leading-6 text-slate-600"><li>모든 신규 질문을 LangChain 체인에서 처리</li><li>GPT-4o-mini가 GENERAL 또는 PRODUCT_FIND로 의도 분류</li><li>브랜드, 성분, 제품 특징, 가격 범위를 JSON으로 추출</li><li>카테고리는 동의어 사전과 문자열 규칙으로 보정</li><li>검색 정보가 부족하면 추가 조건 요청</li></ul></div>
-            <div><h3 className="text-xl font-bold text-slate-950">Storage Roles</h3><dl className="mt-5 space-y-4 text-sm leading-6"><div><dt className="font-bold text-blue-700">Pinecone</dt><dd className="text-slate-600">제품 특징 의미 검색, 유사 후보 생성, 후보 재정렬</dd></div><div><dt className="font-bold text-blue-700">MariaDB</dt><dd className="text-slate-600">최신 상품 정보 관리, 정확 조건 검색, 제품–성분 관계 조회</dd></div><div><dt className="font-bold text-blue-700">LLM</dt><dd className="text-slate-600">의도와 조건 추출, 검색 결과 기반 추천 이유 생성</dd></div></dl></div>
+          <div className="grid gap-5 lg:grid-cols-2 lg:gap-10"><p className="leading-8 text-slate-600">사용자의 질문에는 사용감·효과 같은 의미 기반 특징과 브랜드·가격·카테고리·성분처럼 정확한 필터가 함께 포함될 수 있어, 하나의 검색 방식만으로는 모든 조건을 처리하기 어려웠습니다.</p><p className="border-l-2 border-blue-500 pl-4 text-sm font-semibold leading-7 text-slate-800">자연어 특징이 중심이면 Pinecone에서 유사 후보를 먼저 찾고, 정확 조건이 충분하면 MariaDB에서 후보를 먼저 축소하도록 검색 순서를 분기했습니다.</p></div>
+          <div className="mt-6"><ProjectMedia media={allerCaseStudy.ragImage} /></div>
+          <div className="mt-6">
+            <h3 className="text-xl font-bold text-slate-950">Question Analysis</h3>
+            <ol className="mt-4 grid gap-x-6 gap-y-2 text-sm leading-6 text-slate-600 sm:grid-cols-2 lg:grid-cols-5">
+              {["모든 신규 질문은 LangChain 체인을 통과", "GPT-4o-mini가 GENERAL 또는 PRODUCT_FIND로 의도 분류", "브랜드·성분·제품 특징·가격 범위를 JSON 형태로 추출", "카테고리는 동의어 사전과 문자열 규칙으로 보정", "검색 정보가 부족하면 추가 조건 요청"].map((item, index) => <li className="flex gap-2 border-t border-slate-300 pt-2" key={item}><span className="shrink-0 text-xs font-bold text-blue-700">0{index + 1}</span><span>{item}</span></li>)}
+            </ol>
           </div>
-          <div className="mt-12 space-y-4">
-            {searchStrategies.map(([condition, first, next], index) => <article className="grid gap-3 border-t border-slate-300 pt-5 sm:grid-cols-[42px_1fr_1.5fr] sm:items-center" key={condition}><p className="text-xs font-bold text-blue-700">0{index + 1}</p><h3 className="font-bold text-slate-950">{condition}</h3><p className="text-sm text-slate-600">{first} <span className="text-blue-500" aria-hidden="true">→</span> {next}</p></article>)}
-            <article className="grid gap-3 border-t border-slate-300 pt-5 sm:grid-cols-[42px_1fr_1.5fr] sm:items-center"><p className="text-xs font-bold text-blue-700">05</p><h3 className="font-bold text-slate-950">RDB 결과 없음</h3><p className="text-sm text-slate-600">강한 조건의 결과가 없으면 Vector-first 경로로 폴백</p></article>
+          <div className="mt-8">
+            <h3 className="text-xl font-bold text-slate-950">Search Strategy</h3>
+            <div className="mt-4 overflow-hidden rounded-xl border border-slate-200 bg-white">
+              <div className="hidden grid-cols-[1.1fr_0.7fr_1.5fr] gap-5 border-b border-slate-200 bg-slate-100/70 px-5 py-3 text-xs font-bold uppercase tracking-wider text-slate-500 sm:grid"><span>질문 조건</span><span>우선 검색</span><span>후속 처리</span></div>
+              {searchStrategies.map(([condition, first, next]) => <article className="grid gap-2 border-b border-slate-200 px-4 py-3 last:border-b-0 sm:grid-cols-[1.1fr_0.7fr_1.5fr] sm:items-start sm:gap-5 sm:px-5" key={condition}><h4 className="font-semibold text-slate-900">{condition}</h4><div className="flex items-start gap-2 sm:contents"><p className="shrink-0 text-sm font-semibold text-blue-700">{first}</p><span className="text-blue-400 sm:hidden" aria-hidden="true">→</span><p className="text-sm leading-6 text-slate-600">{next}</p></div></article>)}
+            </div>
           </div>
-          <div className="mt-10 rounded-2xl border border-blue-200 bg-white p-6 sm:p-8"><h3 className="font-bold text-slate-950">Result</h3><p className="mt-3 leading-7 text-slate-600">질문 조건에 맞는 후보를 검색·필터링하고 필요한 경우 벡터 유사도로 재정렬한 뒤 최대 5개의 제품을 제시합니다. 선택도가 높은 조건을 먼저 적용해 필수 조건과 의미 검색을 함께 반영하고, 후보 제품과 최종 LLM 컨텍스트의 크기를 제한했습니다.</p><p className="mt-4 text-sm font-medium text-blue-700">Hybrid RAG는 팀 공동 작업으로 진행했으며, 개인 역할은 검색 구조의 통합과 수정입니다.</p></div>
+          <div className="mt-8"><h3 className="text-xl font-bold text-slate-950">Storage Roles</h3><dl className="mt-4 grid gap-4 sm:grid-cols-3"><div className="border-t border-slate-300 pt-3"><dt className="font-bold text-blue-700">Pinecone</dt><dd className="mt-1 text-sm leading-6 text-slate-600">자연어 특징 의미 검색, 유사 후보 생성과 후보 재정렬</dd></div><div className="border-t border-slate-300 pt-3"><dt className="font-bold text-blue-700">MariaDB</dt><dd className="mt-1 text-sm leading-6 text-slate-600">최신 상품 정보, 정확 조건 검색과 제품–성분 관계 조회</dd></div><div className="border-t border-slate-300 pt-3"><dt className="font-bold text-blue-700">LLM</dt><dd className="mt-1 text-sm leading-6 text-slate-600">질문 의도와 조건 추출, 검색 결과 기반 추천 이유 생성</dd></div></dl></div>
+          <div className="mt-6 border-l-2 border-blue-500 pl-4"><h3 className="font-bold text-slate-950">Result</h3><p className="mt-2 max-w-4xl leading-7 text-slate-600">조건에 맞는 후보를 검색·필터링하고 필요한 경우 벡터 유사도로 재정렬한 뒤 최대 5개의 제품을 제시했습니다. 선택도가 높은 조건을 먼저 적용해 불필요한 후보 비교와 최종 LLM 컨텍스트를 줄였습니다.</p><p className="mt-3 text-sm font-medium text-blue-700">Hybrid RAG는 팀 공동 작업으로 진행했으며, 개인 역할은 검색 구조의 통합과 수정입니다.</p></div>
         </div>
       </section>
 
-      <section id="ocr-analysis" className="scroll-mt-36 px-5 py-20 sm:px-8">
+      <section id="ocr-analysis" className="scroll-mt-36 px-5 py-14 sm:px-8 sm:py-20">
         <div className="mx-auto max-w-6xl">
           <SectionHeader title="OCR Analysis" subtitle="서비스 데이터베이스에 등록되지 않은 제품도 성분표를 기준으로 확인할 수 있도록 구성했습니다." />
           <div className="grid items-start gap-10 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)]">
@@ -232,7 +239,7 @@ export function AllerCaseStudy({ project }: AllerCaseStudyProps) {
         </div>
       </section>
 
-      <section id="skin-fit-score" className="scroll-mt-36 bg-slate-50 px-5 py-20 sm:px-8">
+      <section id="skin-fit-score" className="scroll-mt-36 bg-slate-50 px-5 py-14 sm:px-8 sm:py-20">
         <div className="mx-auto max-w-6xl">
           <SectionHeader title="Skin Fit Score" subtitle="피부 타입과 제품 성분 구성을 함께 고려해 0~100점의 적합도를 계산합니다." />
           <div className="rounded-2xl border border-slate-200 bg-white p-6 sm:p-8"><StepFlow steps={["피부 타입 확인", "전성분 효능군 분류", "상대 비율 계산", "중요도·목표 범위 적용", "0~100점 산출", "주의 성분 반영"]} /></div>
@@ -241,7 +248,7 @@ export function AllerCaseStudy({ project }: AllerCaseStudyProps) {
         </div>
       </section>
 
-      <section id="technical-challenges" className="scroll-mt-36 px-5 py-20 sm:px-8">
+      <section id="technical-challenges" className="scroll-mt-36 px-5 py-14 sm:px-8 sm:py-20">
         <div className="mx-auto max-w-6xl">
           <SectionHeader title="Technical Challenges" subtitle="처리 속도만이 아니라 실행 지속성과 검색 조건의 정확도를 기준으로 구조를 조정했습니다." />
           <div className="space-y-10">
@@ -250,7 +257,7 @@ export function AllerCaseStudy({ project }: AllerCaseStudyProps) {
         </div>
       </section>
 
-      <section id="results-contribution" className="scroll-mt-36 bg-slate-50 px-5 py-20 sm:px-8">
+      <section id="results-contribution" className="scroll-mt-36 bg-slate-50 px-5 py-14 sm:px-8 sm:py-20">
         <div className="mx-auto max-w-6xl">
           <SectionHeader title="Results & Contribution" subtitle="수집한 데이터를 실제 검색과 추천 기능으로 연결한 서비스형 MVP를 완성했습니다." />
           <div className="grid items-stretch gap-10 lg:grid-cols-2">

@@ -59,7 +59,7 @@ export function ProjectSectionNav({ items }: ProjectSectionNavProps) {
       className="sticky top-16 z-40 border-y border-slate-200 bg-white/95 px-5 sm:px-8"
     >
       <div className="mx-auto max-w-6xl overflow-x-auto">
-        <ul className="flex min-w-max items-center gap-7 py-5 text-sm text-slate-700 sm:gap-8 sm:py-6">
+        <ul className="flex min-w-max items-center gap-3 py-3 text-sm text-slate-700 sm:gap-8 sm:py-6">
           {items.map((item) => {
             const isActive = activeSection === item.id;
 
@@ -67,7 +67,7 @@ export function ProjectSectionNav({ items }: ProjectSectionNavProps) {
               <li key={item.id}>
                 <a
                   aria-current={isActive ? "location" : undefined}
-                  className={`relative block pb-2 pt-1 transition-colors hover:text-blue-700 ${
+                  className={`relative flex min-h-11 items-center rounded-sm px-2 transition-colors hover:text-blue-700 focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-blue-600 sm:min-h-0 sm:px-0 sm:pb-2 sm:pt-1 ${
                     isActive
                       ? "font-semibold text-blue-700 after:absolute after:inset-x-0 after:bottom-0 after:h-0.5 after:bg-blue-600"
                       : "font-medium"

@@ -8,9 +8,10 @@ type ProjectMediaProps = {
   compact?: boolean;
   contained?: boolean;
   hideCaption?: boolean;
+  wide?: boolean;
 };
 
-export function ProjectMedia({ media, compact = false, contained = false, hideCaption = false }: ProjectMediaProps) {
+export function ProjectMedia({ media, compact = false, contained = false, hideCaption = false, wide = false }: ProjectMediaProps) {
   const publicPath = join(process.cwd(), "public", media.src.replace(/^\//, ""));
   const hasImage = existsSync(publicPath);
 
@@ -26,6 +27,8 @@ export function ProjectMedia({ media, compact = false, contained = false, hideCa
             src={media.src}
           />
         </div>
+      ) : hasImage && wide ? (
+        <Image alt={media.alt} className="h-auto w-full object-contain" height={300} sizes="(max-width: 1200px) 100vw, 1120px" src={media.src} width={1500} />
       ) : hasImage ? (
         <Image
           alt={media.alt}

@@ -10,6 +10,7 @@ export function ProjectCard({ project, prominence = "secondary" }: ProjectCardPr
   const githubLink = project.relatedLinks.find((link) => link.label.toLowerCase().includes("github"));
   const isPrimary = prominence === "primary";
   const isPlanned = project.status === "예정";
+  const cardLinkClass = "inline-flex min-h-11 items-center rounded-sm px-1 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 sm:min-h-0 sm:px-0";
 
   if (isPrimary) {
     return (
@@ -50,11 +51,11 @@ export function ProjectCard({ project, prominence = "secondary" }: ProjectCardPr
         ) : null}
 
         <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-3 text-sm font-semibold">
-          <Link className="text-blue-700 hover:text-blue-800" href={`/projects/${project.slug}`}>
+          <Link className={`${cardLinkClass} text-blue-700 hover:text-blue-800`} href={`/projects/${project.slug}`}>
             상세 프로젝트 보기 <span aria-hidden="true">→</span>
           </Link>
           {githubLink ? (
-            <a className="text-slate-600 hover:text-slate-950" href={githubLink.href} target="_blank" rel="noopener noreferrer">
+            <a className={`${cardLinkClass} text-slate-600 hover:text-slate-950`} href={githubLink.href} target="_blank" rel="noopener noreferrer">
               GitHub <span aria-hidden="true">↗</span>
             </a>
           ) : null}
@@ -70,12 +71,19 @@ export function ProjectCard({ project, prominence = "secondary" }: ProjectCardPr
         {project.subtitle ? <p className="mt-2 text-sm font-medium text-slate-500">{project.subtitle}</p> : null}
       </div>
       <p className="mt-4 text-sm leading-7 text-slate-600">{project.summary}</p>
+      {!isPlanned && project.coreTechnologies ? (
+        <ul className="mt-5 flex flex-wrap gap-2" aria-label="프로젝트 핵심 기술">
+          {project.coreTechnologies.slice(0, 5).map((technology) => (
+            <li className="rounded-md border border-slate-200 bg-slate-50 px-2.5 py-1 text-xs font-medium text-slate-600" key={technology}>{technology}</li>
+          ))}
+        </ul>
+      ) : null}
       <div className="mt-7 flex flex-wrap items-center gap-4 text-sm font-semibold">
-        <Link className="text-blue-700 hover:text-blue-800" href={`/projects/${project.slug}`}>
+        <Link className={`${cardLinkClass} text-blue-700 hover:text-blue-800`} href={`/projects/${project.slug}`}>
           상세 페이지 <span aria-hidden="true">→</span>
         </Link>
         {githubLink ? (
-          <a className="text-slate-600 hover:text-slate-950" href={githubLink.href} target="_blank" rel="noopener noreferrer">
+          <a className={`${cardLinkClass} text-slate-600 hover:text-slate-950`} href={githubLink.href} target="_blank" rel="noopener noreferrer">
             GitHub <span aria-hidden="true">↗</span>
           </a>
         ) : (
