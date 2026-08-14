@@ -405,7 +405,7 @@ export const projects: Project[] = [
     relatedLinks: [
       { label: "GitHub Repository", href: "https://github.com/bhjin97/Meta_Pipeline" },
       { label: "Final Presentation · PDF", href: "/projects/meta-pipeline/E-Commerce-Hybrid-Data-Pipeline.pdf" },
-      { label: "Presentation Video · YouTube", href: "https://www.youtube.com/watch?v=AOgdfq-37nA&t=204s" },
+      { label: "1st Presentation · Video", href: "https://www.youtube.com/watch?v=AOgdfq-37nA&t=204s" },
     ],
   },
   {

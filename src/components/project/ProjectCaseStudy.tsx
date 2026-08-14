@@ -46,6 +46,7 @@ export function ProjectCaseStudy({ project }: ProjectCaseStudyProps) {
             <div><dt className="text-xs font-bold uppercase tracking-wider text-slate-400">Scope</dt><dd className="mt-2 text-sm leading-6 text-slate-600">{project.scopeDescription}</dd></div>
           </dl>
           <div className="mt-6"><ProjectResourceLinks links={project.relatedLinks} /></div>
+          <p className="mt-3 text-sm leading-6 text-slate-500">발표 영상은 1차 구현 시점을 기준으로 하며, 최종 설계와 성능 검증 결과는 PDF와 현재 프로젝트 상세 페이지에 반영했습니다.</p>
           <div className="mt-8 grid gap-5 sm:grid-cols-2">
             <div><p className="text-xs font-bold uppercase tracking-wider text-slate-400">Core Technology</p><p className="mt-3 text-sm leading-7 text-slate-700">{project.coreTechnologies?.join(" · ")}</p></div>
             <div><p className="text-xs font-bold uppercase tracking-wider text-slate-400">Supporting Technology</p><p className="mt-3 text-sm leading-7 text-slate-600">{supportingTechnologies?.map((technology) => technology.name).join(" · ")}</p></div>
