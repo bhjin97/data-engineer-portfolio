@@ -7,7 +7,7 @@ export function SkillsSection() {
     <section id="skills" className="scroll-mt-20 border-b border-slate-200 bg-white px-5 py-20 sm:px-8">
       <div className="mx-auto max-w-6xl">
         <SectionHeading title="Skills" />
-        <div className="grid gap-px overflow-hidden rounded-2xl border border-slate-200 bg-slate-200 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid grid-cols-1 gap-px overflow-hidden rounded-2xl border border-slate-200 bg-slate-200 min-[360px]:grid-cols-2 lg:grid-cols-4">
           {skills.map((group) => (
             <div key={group.category} className="bg-white p-6">
               <h3 className="text-sm font-semibold text-slate-950">{group.category}</h3>
@@ -30,7 +30,7 @@ export function SkillsSection() {
               )}
             </div>
           ))}
-          <div aria-hidden="true" className="hidden bg-white sm:block" />
+          <div aria-hidden="true" className="hidden bg-white min-[360px]:block" />
         </div>
       </div>
     </section>
