@@ -224,7 +224,21 @@ export function AllerCaseStudy({ project }: AllerCaseStudyProps) {
               {searchStrategies.map(([condition, first, next]) => <article className="grid gap-2 border-b border-slate-200 px-4 py-3 last:border-b-0 sm:grid-cols-[1.1fr_0.7fr_1.5fr] sm:items-start sm:gap-5 sm:px-5" key={condition}><h4 className="font-semibold text-slate-900">{condition}</h4><div className="flex items-start gap-2 sm:contents"><p className="shrink-0 text-sm font-semibold text-blue-700">{first}</p><span className="text-blue-400 sm:hidden" aria-hidden="true">→</span><p className="text-sm leading-6 text-slate-600">{next}</p></div></article>)}
             </div>
           </div>
-          <div className="mt-8"><h3 className="text-xl font-bold text-slate-950">Storage Roles</h3><dl className="mt-4 grid gap-4 sm:grid-cols-3"><div className="border-t border-slate-300 pt-3"><dt className="font-bold text-blue-700">Pinecone</dt><dd className="mt-1 text-sm leading-6 text-slate-600">자연어 특징 의미 검색, 유사 후보 생성과 후보 재정렬</dd></div><div className="border-t border-slate-300 pt-3"><dt className="font-bold text-blue-700">MariaDB</dt><dd className="mt-1 text-sm leading-6 text-slate-600">최신 상품 정보, 정확 조건 검색과 제품–성분 관계 조회</dd></div><div className="border-t border-slate-300 pt-3"><dt className="font-bold text-blue-700">LLM</dt><dd className="mt-1 text-sm leading-6 text-slate-600">질문 의도와 조건 추출, 검색 결과 기반 추천 이유 생성</dd></div></dl></div>
+          <div className="mt-8">
+            <h3 className="text-xl font-bold text-slate-950">Storage Roles</h3>
+            <dl className="mt-4 grid gap-4 sm:grid-cols-3">
+              <div className="border-t border-slate-300 pt-3"><dt className="font-bold text-blue-700">Pinecone</dt><dd className="mt-1 text-sm leading-6 text-slate-600">리뷰 대표 특징의 의미 검색, 유사 제품 후보 생성 및 재정렬</dd></div>
+              <div className="border-t border-slate-300 pt-3"><dt className="font-bold text-blue-700">MariaDB</dt><dd className="mt-1 text-sm leading-6 text-slate-600">최신 상품 정보, 정확 조건 검색과 제품–성분 관계 조회</dd></div>
+              <div className="border-t border-slate-300 pt-3"><dt className="font-bold text-blue-700">LLM</dt><dd className="mt-1 text-sm leading-6 text-slate-600">리뷰 특징 요약, 질문 조건 추출 및 검색 결과 기반 추천 이유 생성</dd></div>
+            </dl>
+            <div className="mt-6 border-t border-slate-300 pt-6">
+              <p className="text-xs font-bold uppercase tracking-wider text-blue-700">Embedding Data</p>
+              <p className="mt-3 text-sm leading-6 text-slate-600">제품별 공감순 상위 30개 리뷰에서 반복적으로 언급되는 특징과 사용 경험을 LLM으로 요약한 뒤, 임베딩 모델로 벡터화해 Pinecone에 적재했습니다.</p>
+              <div className="mt-4">
+                <StepFlow steps={["공감순 상위 30개 리뷰", "반복 특징·사용 경험 요약", "임베딩 생성", "Pinecone 적재"]} />
+              </div>
+            </div>
+          </div>
           <div className="mt-6 border-l-2 border-blue-500 pl-4"><h3 className="font-bold text-slate-950">Result</h3><p className="mt-2 max-w-4xl leading-7 text-slate-600">조건에 맞는 후보를 검색·필터링하고 필요한 경우 벡터 유사도로 재정렬한 뒤 최대 5개의 제품을 제시했습니다. 선택도가 높은 조건을 먼저 적용해 불필요한 후보 비교와 최종 LLM 컨텍스트를 줄였습니다.</p><p className="mt-3 text-sm font-medium text-blue-700">Hybrid RAG는 팀 공동 작업으로 진행했으며, 개인 역할은 검색 구조의 통합과 수정입니다.</p></div>
         </div>
       </section>
